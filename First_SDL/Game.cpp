@@ -7,7 +7,7 @@
 
 
 
-Map* map;
+Map* myMap;
 Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -70,14 +70,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 	
-	map = new Map();
+	myMap = new Map();
 
 
 	//ecs implementation
 	Map::LoadMap("assets/p16x16.txt", 16, 16);
 
-	player.addComponent<TransformComponent>();
-	player.addComponent<SpriteComponent>("assets/sand_storm.png");
+	player.addComponent<TransformComponent>(0,0,64,64,2);
+	player.addComponent<SpriteComponent>("assets/sand_storm_anim.png",true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
