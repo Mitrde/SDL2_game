@@ -15,25 +15,27 @@ public:
 	SDL_Rect srcR, destR;
 
 	TransformComponent* transform;
-	ColliderComponent() = default;
-
+	
 	ColliderComponent(std::string t, int xpos, int ypos,int size)
 	{
 		tag = t;
 		collider.x = xpos;
 		collider.y = ypos;
-		collider.h = collider.w = size;
+		collider.h = collider.w = size;		
 	}
 
-	ColliderComponent(std::string tag)
+	ColliderComponent(std::string t)
 	{
-		this->tag = tag;
+		tag = t;
 	}
 
 	void init() override
 	{
 		if (!entity->hasComponent<TransformComponent>())
+		{		
 			entity->addComponent<TransformComponent>();
+		}
+
 		transform = &entity->getComponent<TransformComponent>();
 
 		tex = TextureManager::LoadTexture("assets/ColTex.png");
@@ -52,8 +54,8 @@ public:
 		{
 			collider.x = static_cast<int>(transform->position.x);
 			collider.y = static_cast<int>(transform->position.y);
-			collider.w = static_cast<int>(transform->width*transform->scale);
-			collider.h = static_cast<int>(transform->height*transform->scale);
+			collider.w = transform->width*transform->scale;
+			collider.h = transform->height*transform->scale;
 		}
 		destR.x = collider.x - Game::camera.x;
 		destR.y = collider.y - Game::camera.y;

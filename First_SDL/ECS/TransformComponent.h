@@ -9,19 +9,20 @@ public:
 	Vector2D position;
 	Vector2D velocity;
 	int speed = 3;
-	int height = 64;
-	int width = 64;
+	int height = 32;
+	int width = 32;
 	int scale = 1;
 	
+	bool blocked = false;
+
 	TransformComponent()
 	{
 		position.Zero();
 	}
-	TransformComponent(int scale)
+	TransformComponent(int sc)
 	{
-		position.x = 370;
-		position.y = 290;
-		this->scale = scale;
+		position.Zero();
+		scale = sc;
 	}
 	TransformComponent(float x, float y)
 	{
@@ -45,16 +46,10 @@ public:
 
 	void update() override
 	{
-		if (position.x + velocity.x*speed > 80 && position.x + velocity.x*speed <650)
-			position.x+=velocity.x*speed;
-		if (position.y + velocity.y*speed > 80 && position.y+ velocity.y*speed <480)
-			position.y+= velocity.y*speed;
+		if (position.x + velocity.x*speed > 10 && position.x + velocity.x*speed <730)
+			position.x+= static_cast<int>(velocity.x*speed);
+		if (position.y + velocity.y*speed > 10 && position.y+ velocity.y*speed <530)
+			position.y+= static_cast<int>(velocity.y*speed);
 	}
-
-
-	void setPos(float x, float y)
-	{
-		position.x = x;
-		position.y = y;
-	}
+	
 };

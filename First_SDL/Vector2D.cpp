@@ -59,7 +59,7 @@ Vector2D & Vector2D::operator/=(const Vector2D & vec)
 Vector2D & Vector2D::operator*(const int i)
 {
 	this->x *= i;
-	this->y *= y;
+	this->y *= i;
 	return *this;
 }
 
