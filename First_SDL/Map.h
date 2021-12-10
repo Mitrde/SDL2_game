@@ -1,12 +1,11 @@
 #pragma once
-#include <string> 
-#include "Game.h"
-
+#include <string>
 
 class Map
 {
 public:
-	Map(std::string tID,int ms, int ts);
+
+	Map(std::string tID, int ms, int ts);
 	~Map();
 
 	void LoadMap(std::string path, int sizeX, int sizeY);
@@ -17,5 +16,5 @@ private:
 	int mapScale;
 	int tileSize;
 	int scaledSize;
-	
+
 };

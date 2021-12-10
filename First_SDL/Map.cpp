@@ -1,15 +1,19 @@
-#include  "Map.h"
+#include "Map.h"
 #include "Game.h"
 #include <fstream>
-#include "ECS/ECS.h"
-#include "ECS/Components.h"
+#include "ECS\ECS.h"
+#include "ECS\Components.h"
+
 extern Manager manager;
 
-Map::Map(std::string tID,int ms,int ts): texID(tID),mapScale(ms),tileSize(ts)
+Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(ts)
 {
 	scaledSize = ms * ts;
 }
 
+Map::~Map()
+{
+}
 
 void Map::LoadMap(std::string path, int sizeX, int sizeY)
 {
@@ -27,21 +31,22 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 			srcY = atoi(&c) * tileSize;
 			mapFile.get(c);
 			srcX = atoi(&c) * tileSize;
-			AddTile(srcX, srcY, x*scaledSize, y*scaledSize);
+			AddTile(srcX, srcY, x * scaledSize, y * scaledSize);
 			mapFile.ignore();
 		}
 	}
+
 	mapFile.ignore();
+
 	for (int y = 0; y < sizeY; y++)
 	{
 		for (int x = 0; x < sizeX; x++)
 		{
 			mapFile.get(c);
-			//std::cout << c << std::endl;
 			if (c == '1')
 			{
 				auto& tcol(manager.addEntity());
-				tcol.addComponent<ColliderComponent>("terrain", x*scaledSize, y*scaledSize,scaledSize);
+				tcol.addComponent<ColliderComponent>("terrain", x * scaledSize, y * scaledSize, scaledSize);
 				tcol.addGroup(Game::groupColliders);
 			}
 			mapFile.ignore();
@@ -53,7 +58,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 
 void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
 {
-	auto &tile(manager.addEntity());
-	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize,mapScale, texID);
+	auto& tile(manager.addEntity());
+	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
 	tile.addGroup(Game::groupMap);
 }

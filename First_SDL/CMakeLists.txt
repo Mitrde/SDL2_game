@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(SDL2_Game)
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+
+file(GLOB
+	 CPPS "*.cpp" "ECS/*.cpp")
+
+
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+#set(CMAKE_PREFIX_PATH  ${PROJECT_SOURCE_DIR}/cmake)
+
+add_executable(${PROJECT_NAME} ${CPPS})
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+
+file(COPY ${SDL2_DIR}/lib/x64/SDL2.dll
+    DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${SDL2_image_DIR}/lib/x64/
+    DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${SDL2_ttf_DIR}/lib/x64/
+    DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/assets
+    DESTINATION ${CMAKE_BINARY_DIR})
+
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_ttf_INCLUDE_DIR})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+
+#add_subdirectory(ECS)
+
+
+
+
+
+
